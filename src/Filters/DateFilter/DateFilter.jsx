@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Moment from 'moment';
 
 class DateFilter extends Component {
     constructor(props) {
@@ -12,14 +11,13 @@ class DateFilter extends Component {
     }
   
     render() {
-      let date = Moment(this.props.date).format('YYYY-MM-DD');
-        
+      const { date, name, icon} = this.props;
       return(
         <div className="field">
           <div className="control has-icons-left">
-            <input className="input" type="date" onChange={ this.handleDateChange } value={ date } name={ this.props.name }/>
+            <input className="input" type="date" onChange={ this.handleDateChange } value={ date } name={ name }/>
             <span className="icon is-small is-left">
-              <i className={`fas fa-${ this.props.icon }`}></i>
+              <i className={`fas fa-${ icon }`}></i>
             </span>
           </div>
         </div>

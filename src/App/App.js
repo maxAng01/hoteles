@@ -2,22 +2,25 @@ import React, {Component} from 'react';
 import Hero from '../Hero/Hero';
 import Filters from '../Filters/Filters';
 import Hotels from '../Hotels/Hotels';
+import Moment from 'moment';
 import './App.scss';
+
 
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-   const today = new Date(); 
-   const dateTo = new Date(today.valueOf() + 86400000);  
+    const today = new Date(); 
+    const todayFormated = Moment(today).format("YYYY-MM-DD")
+    const nextDateFormated = Moment(today).add(1, 'month').format("YYYY-MM-DD")
   
     this.state = {
       hotels: [],
       hotelsFiltered: [],
       filters: {
-        dateFrom: today,
-        dateTo: dateTo,
+        dateFrom: todayFormated,
+        dateTo: nextDateFormated,
         country: "select",
         price: 'select',
         rooms: 'select'
@@ -34,9 +37,10 @@ class App extends Component {
       return response.json();
     })
     .then(myJson => {
-      this.setState({ hotels: myJson, 
+      this.setState({ hotels: myJson
       });
       this.filterOptions();
+      
     })
     .catch(error => {
       console.log(error);
@@ -51,27 +55,24 @@ class App extends Component {
   }
 
 
+
   filterOptions(){
+    const { filters } = this.state; 
+    const { rooms, price, country, dateFrom, dateTo } = filters;
+
     const hotelsFiltered = this.state.hotels.filter(hotel => {
-      return (hotel.rooms <= (this.state.filters.rooms !== 'select' ? this.state.filters.rooms : hotel.rooms) &&
-      hotel.price === (this.state.filters.price !== 'select' ? parseInt(this.state.filters.price) : hotel.price) &&
-      hotel.country === (this.state.filters.country !== 'select' ? this.state.filters.country : hotel.country) &&
-      this.state.filters.dateFrom >= hotel.availabilityFrom &&
-      this.state.filters.dateTo <= hotel.availabilityTo
-    )
-  })
+      return (hotel.rooms <= (rooms !== 'select' ? rooms : hotel.rooms) &&
+      hotel.price === (price !== 'select' ? parseInt(price) : hotel.price) &&
+      hotel.country === (country !== 'select' ? country : hotel.country) &&
+      dateFrom <= Moment(hotel.availabilityFrom).format("YYYY-MM-DD") && dateTo >= Moment(hotel.abailabilityTo).format("YYYY-MM-DD"))
+    }) 
+
     this.setState({
       hotelsFiltered: hotelsFiltered
     })
  }
 
   render() {
-    
-    //console.log(this.state.filters.dateFrom);
-
-
-    //console.log(this.state.hotelsFiltered)
-
     return (
       <div>
         <Hero filters={ this.state.filters } />

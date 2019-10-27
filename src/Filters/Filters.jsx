@@ -19,12 +19,7 @@ class Filters extends Component {
   
     handleDateChange(event) {
       let payload = this.props.filters
-      payload[event.target.name] = new Date(event.target.value)
-      //la primera fecha no puede ser mayor a la segunda 
-      if(payload.dateFrom.valueOf() >= payload.dateTo.valueOf()) {
-        let date = payload.dateFrom.valueOf()
-        payload.dateTo = new Date(date.valueOf()+ 86400000)
-      }
+      payload[event.target.name] = event.target.value
       this.props.onFilterChange(payload)
     }
   

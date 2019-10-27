@@ -3,7 +3,7 @@ import Hotel from './Hotel/Hotel';
 
 class Hotels extends Component {
     render() {
-      const {hotels} = this.props
+      const { hotels } = this.props
       return (
         <section className="section" style={ {marginTop: '3em'} }>
           <div className="container">

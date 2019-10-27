@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ShowPrice = ({price}) => {
+const ShowPrice = ({ price }) => {
     let dolarIcons = [];
     var styles;
     for(var i = 0; i < 4; i++) {
-      if(price > i) {
+      if (price > i) {
         styles = {margin: '0 .125em'};
       } else {
         styles = {margin: '0 .125em', opacity: '.25'}
